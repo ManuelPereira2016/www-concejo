@@ -1,0 +1,16 @@
+{% extends 'base.twig.html' %}
+
+{% block content %}
+	<div id="section" class="well well-lg">
+		<h2>GESTOR DE MENSAJERIA</h2>
+		<h3 class="glyphicon glyphicon-briefcase center-block"> Buzon de mensajes</h3>
+		<div id="tableMessages"></div>
+	</div>
+	<input type="hidden" id="pag" value="1" />
+	<div id='mail' style="clear:both;" class="well well-sm"></div>
+	<script>
+	$(function(){
+		messaging(null, null);
+	});
+	</script>
+{% endblock %}

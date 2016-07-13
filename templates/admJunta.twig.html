@@ -1,0 +1,46 @@
+{% extends 'base.twig.html' %}
+
+{% block content %}
+	<div id="section" class="well well-lg">
+		<h1 class="glyphicon glyphicon-briefcase center-block"><strong> Junta directiva</strong></h1>
+		{% if edit != 0 %}
+			<div id='confirmation'> La junta ha sido actualizada con exito.</div>
+		{% endif %}
+		<table class="table table-bordered table-condensed table-hover">
+			<tr>
+				<th style="width:600px;background-color:#cccccc;padding:5px;">Cargo</th>
+				<th style="background-color:#cccccc;padding:5px;width:30px"></th>
+			</tr>
+			{% for datos in lista %}
+				<tr>
+					<td style="padding=5px;">{{ datos['cargo'] }}</td>
+					<td style="padding=5px;"><a href="junta?id={{ datos['id'] }}">Editar</a></td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+	{% if id is not empty %}
+		<div id="formulario">
+			<h4 class="well well-sm">ACTUALIZA EL NOMBRE Y LA FOTO DE LOS DIRIGENTES.</h4>
+			{% if error is not empty %}
+				<h3>{{ error }}</h3>
+			{% endif %}
+			<form id="form" action="{{ SERVER|escape }}" enctype="multipart/form-data" method="post">
+				<label>Agregar foto:</label>
+				<input id="foto" type="file" /><br />
+				<img class="preview" src="../galeria/{{ fila['image'] }}" /><br />
+				<input type="hidden" id="previous" value="{{ fila['image'] }}" />
+				<progress id="progress_bar" value="0" max="100"></progress>
+				<h3 id="status"></h3>
+				<input type="hidden" id="edit" name="edit" value="0" />
+				<input type="hidden" id="upload" value="/concejo/admin/dirUpload.php" />
+				<label>Nombre:</label>
+				<input type="text" class="form-control" id="nombre" value="{{ fila['nombre'] }}" /><br />
+				<label>Cargo:</label>
+				<input type="text" class="form-control" id="cargo" value="{{ fila['cargo'] }}" /><br />
+				<input type="hidden" id="id_edit" name="id_edit" value="{{ fila['id'] }}"/>
+				<input type="button" value="Editar" class="btn btn-primary" onclick="uploadDir()"/>
+			</form>
+		</div>
+	{% endif %}
+{% endblock %}

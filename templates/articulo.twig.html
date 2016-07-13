@@ -1,0 +1,11 @@
+{% extends 'base.twig.html' %}
+
+{% block content %}
+	<div id="section" class="well well-lg">
+		<h1><strong>{{ titulo }}</strong></h1>
+		<h4>{{ fecha|upper }} - {{ resumen }}</h4>
+		<img alt="concejo_big" src="/concejo/galeria/{{ imagen }}" class="img-thumbnail" />
+		<p >{{ articulo|nl2br }}</p>
+	</div>
+{% endblock %}
+

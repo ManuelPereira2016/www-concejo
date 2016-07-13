@@ -1,0 +1,30 @@
+<META http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+
+<h6 style="text-align: justify;"><strong>{{ fila['titulo'] }}<strong></h6>
+
+{% if (opc == 'v') %}
+	<form id="form" action="{{ SERVER|escape }}" enctype="multipart/form-data" method="get">
+		<input type="hidden" name="opc" value="r" />
+		{% for datos in lista %}
+			<p style="text-align: justify;font-size: 11px;">
+			<input type="radio" name="opcion" value="{{ datos['opcion'] }}">			
+			{{ datos['opcion'] }}</p>
+		{% endfor %}
+		<br />
+		<input type="submit" class="btn btn-primary" value="Votar"/>
+		<input type="submit" class="btn btn-primary" value="Resultados"/>
+	</form>
+{% else %}
+	{% if (total == 0) %}
+		<h6>Lo sentimos, Aun no se ha registrado ningun voto.</h6>
+	{% else %}
+		{% for datos in lista %}
+			<p style="text-align: justify;font-size: 11px; font-weight: normal;">
+			{{ datos['opcion']|upper }}<br />
+			<img src="/concejo/imagenes/bar.png" align="top" height="15"
+			width="{{ (datos['valor']*100/total) }}" />
+			{{ (datos['valor']*100/total)|round }}%<br /></p>
+		{% endfor %}
+			<small>Votos: {{ total }}</small>
+	{% endif %}
+{% endif %}

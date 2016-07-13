@@ -1,0 +1,42 @@
+{% extends 'base.twig.html' %}
+
+{% block content %}
+	<div id="section" class="well well-sm">
+		<h1><strong>HIMNO DEL MUNICIPIO ZAMORA</strong></h1>
+		<h4>Disfruta de la letra y la musica de nuestro celebre himno.</h4>
+	</div>
+	<div class="well well-sm">
+	<span class="glyphicon glyphicon-headphones divided"> Aqui podras escuchar el himno del municipio.</span>
+	<audio class="center-block" loop controls src="/concejo/mp3/zamoraSong.mp3">
+	</audio>
+	</div>
+	<div id="section" class="well well-lg">
+		<div id="himnos">
+			<h2 class="glyphicon glyphicon-music center-block"> HIMNO</h2>
+			<p>Letra: Licdos. Elías Álvarez e Isidro Tirado<br />
+			Música: Prof. Aquiles Gómez
+			<h2> CORO</h2>
+			<p>Es Zamora tierra encrucijada
+			con ínclito furor
+			que irradia el horizonte su ensoñación
+			sembrada de versos de vivo color
+			nuestra historia al grito de canción.</p>
+			<h2> 1</h2>
+			<p>Al viento el solsticio de un pasaje
+			naciente a su fundación
+			que hace bailar en un viaje
+			nuestra gesta a la Federación</p>
+			<h2> 2</h2>
+			<p>Somos tus hijos mestizos
+			curados al sol y la lluvia
+			con sangre de todos los siglos
+			llama fulgurante de Zamora</p>
+			<h2> 3</h2>
+			<p>Al grito de “Hombres libres”
+			al compás de corneta de Agraz
+			en avanzada triunfante
+			a la diestra de la paz</p>
+		</div>
+		<!--<div id="player"><p> Reproducir himno </p></div> -->
+	</div>
+{% endblock %}

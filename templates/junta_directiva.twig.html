@@ -1,0 +1,14 @@
+{% extends 'base.twig.html' %}
+
+{% block content %}
+	<div id="section" class="well well-lg"><h1><strong>JUNTA DIRECTIVA</strong></h1>
+	<h4>Conoce a los directivos del Concejo municipal de Zamora.</h4>
+	</div>
+	{% for directiva in lista %}
+		<div id="section" class="well well-lg">
+			<h3><strong>{{ directiva['nombre'] }}</strong></h3>
+			<img src="/concejo/galeria/thumb_{{ directiva['image'] }}" class="img-thumbnail center-block" alt="picture" />
+			<h5>{{ directiva['cargo'] }}</h5>
+		</div>
+	{% endfor %}
+{% endblock %}

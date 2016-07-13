@@ -1,0 +1,78 @@
+{% extends 'base.twig.html' %}
+
+{% block content %}
+	<div id="section" class="well well-lg">
+		<h2>Gestion del calendario.</h2>
+		{% if add != 0 %}
+			<div id='confirmation'> La sesion se agrego con exito.</div>
+		{% endif %}
+		{% if dele != 0 %}
+			<div id='confirmation'> La sesion se elimino con exito.</div>
+		{% endif %}
+		<h3 class="glyphicon glyphicon-briefcase center-block"> Listado de sesiones</h3>
+		<table class="table table-bordered table-condensed table-hover">
+			<tr>
+				<th style="background-color:#cccccc;padding:5px;">Sesion</th>
+				<th style="background-color:#cccccc;padding:5px;width:10px"></th>
+			</tr>
+		{% for datos in lista %}
+			<tr>
+				<td style="padding=5px;">{{ datos['sesion'] }}</td>
+				<td style="padding=5px;"><span class="link" onclick="deleteID({{ datos['id'] }})">Borrar</span></td>
+			</tr>
+		{% endfor %}
+		</table>
+	</div>
+		<div id="formulario">
+			<h4 class="well well-sm">Agregar una nueva sesion</h4>
+			{% if error is not empty %}
+				<h3>{{ error }}</h3>
+			{% endif %}
+			<form id="form" enctype="multipart/form-data" 
+			action="{{ SERVER|escape }}" method="post" >
+				<input type="hidden" id="add" name="add" value="0" />
+				<input type="hidden" id="dele" name="dele" value="0" />
+				<input type="hidden" id="upload" value="/concejo/admin/sesUpload.php" />
+				<label>Sesion:</label>
+				<input type="text" id="sesion" class="form-control" maxlength="255" required/><br />
+				<label>Dia:</label>
+				<select name="day" id="day"><option value='01'>01</option>
+				<option value='02'>02</option><option value='03'>03</option>
+				<option value='04'>04</option><option value='05'>05</option>
+				<option value='06'>06</option><option value='07'>07</option>
+				<option value='08'>08</option><option value='09'>09</option>
+				<option value='10'>10</option><option value='11'>11</option>
+				<option value='12'>12</option><option value='13'>13</option>
+				<option value='14'>14</option><option value='15'>15</option>
+				<option value='16'>16</option><option value='17'>17</option>
+				<option value='18'>18</option><option value='19'>19</option>
+				<option value='20'>20</option><option value='21'>21</option>
+				<option value='22'>22</option><option value='23'>23</option>
+				<option value='24'>24</option><option value='25'>25</option>
+				<option value='26'>26</option><option value='27'>27</option>
+				<option value='28'>28</option><option value='29'>29</option>
+				<option value='30'>30</option><option value='31'>31</option>
+				</select>
+				<label>Mes:</label>
+				<select name="month" id="month">
+				<option value="Enero">Enero</option>
+				<option value="Febrero">Febrero</option>
+				<option value="Marzo">Marzo</option>
+				<option value="Abril">Abril</option>
+				<option value="Mayo">Mayo</option>
+				<option value="Junio">Junio</option>
+				<option value="Julio">Julio</option>
+				<option value="Agosto">Agosto</option>
+				<option value="Septiembre">Septiembre</option>
+				<option value="Octubre">Octubre</option>
+				<option value="Noviembre">Noviembre</option>
+				<option value="Diciembre">Diciembre</option>
+				</select>
+				<label>Año:</label>
+				<select name="year" id="year">
+				<option value="2016">2016</option><option value="2017">2017</option>
+				</select>
+				<input type="button" value="Agregar" class="btn btn-primary" onclick="uploadSession()"/>
+			</form>
+		</div>
+{% endblock %}

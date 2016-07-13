@@ -1,0 +1,44 @@
+{% extends 'base.twig.html' %}
+
+{% block content %}
+	<div id="section" class="well well-lg">
+		<h2>Administrador de imagenes.</h2>
+		{% if add != 0 %}
+			<div id='confirmation'> La imagen se cargo con exito.</div>
+		{% endif %}
+		{% if dele != 0 %}
+			<div id='confirmation'> La imagen ha sido eliminada.</div>
+		{% endif %}
+		<div id="vista">
+			{% for datos in lista %}
+				<div id="previa">
+					<img src="/concejo/galeria/thumb_{{ datos['image'] }}" />
+					<span class="link" onclick="deleteID({{ datos['id'] }})">Borrar</span>
+				</div>
+			{% endfor %}
+		</div>
+		{% if pagSiguiente <= paginas %}
+			<a id="vinculo" href="fotos?pag={{ pagSiguiente }}" > - Siguiente</a>
+		{% endif %}
+		{% if pagAnterior > 0 %}
+			<a id="vinculo" href="fotos?pag={{ pagAnterior }}"> - Anterior</a>
+		{% endif %}
+	</div>	
+	<div id="formulario" >
+		<h4 class="well well-sm">Agregar una nueva imagen</h4>
+		<form id="form" enctype="multipart/form-data" action="{{ SERVER|escape }}" method="post" >
+			<label>Cargar imagen:</label>
+			<input type="file" name="foto" id="foto"/><br />
+			<progress id="progress_bar" value="0" max="100"></progress>
+			<h3 id="status"></h3>
+			<input type="hidden" id="add" name="add" value="0" />
+			<input type="hidden" id="dele" name="dele" value="0" />
+			<input type="hidden" id="upload" value="/concejo/admin/picUpload.php" />
+			<label>Nombre:</label>
+			<input type="text" class="form-control" id="nombre" /><br />
+			<label>Descripcion:</label>
+			<input type="text" class="form-control" id="descripcion" /><br />
+			<input type="button" value="Agregar" class="btn btn-primary" onclick="uploadImage()"/>
+		</form>
+	</div>		
+{% endblock %}

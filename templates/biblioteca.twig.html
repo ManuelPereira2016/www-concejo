@@ -1,0 +1,54 @@
+{% extends 'base.twig.html' %}
+
+{% block content %}
+	<div id="section" class="well well-sm">
+		<h1><strong>PORTAL LEGISLATIVO</strong></h1>
+		<h4>Accede a toda la documentacion parlamentaria referente a la legislacion del municipio Zamora incluyendo sus ordenanzas, acuerdos y decretos.</h4>
+	</div>
+	<div id="section" class="well well-lg">
+		<table class="table table-bordered table-condensed table-hover">
+			<tr>
+				<th>ORDENANZAS.</th>
+			</tr>
+			{% for docs in lista %}
+				{% if docs['categoria'] is same as('Ordenanza') %}
+					<tr>
+						<td>
+							<a href="docs/{{ docs['documento'] }}">
+							{{ docs['nombre'] }}</a> - 
+							<span>{{ docs['descripcion'] }}</span>
+						</td>
+					</tr>
+				{% endif %}
+			{% endfor %}
+			<tr>
+				<th>ACUERDOS.</th>
+			</tr>
+			{% for docs in lista %}
+				{% if docs['categoria'] is same as('Acuerdo') %}
+					<tr>
+						<td>
+							<a href="docs/{{ docs['documento'] }}">
+							{{ docs['nombre'] }}</a> - 
+							<span>{{ docs['descripcion'] }}</span>
+						</td>
+					</tr>
+				{% endif %}
+			{% endfor %}
+			<tr>
+				<th>DECRETOS.</th>
+			</tr>
+			{% for docs in lista %}
+				{% if docs['categoria'] is same as('Decreto') %}
+					<tr>
+						<td>
+							<a href="docs/{{ docs['documento'] }}">
+							{{ docs['nombre'] }}</a> - 
+							<span>{{ docs['descripcion'] }}</span>
+						</td>
+					</tr>
+				{% endif %}
+			{% endfor %}
+		</table>
+	</div>
+{% endblock %}

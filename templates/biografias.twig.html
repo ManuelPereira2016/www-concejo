@@ -1,0 +1,37 @@
+{% extends 'base.twig.html' %}
+
+{% block content %}	
+	<div id="section" class="well well-sm">
+		<h1><strong>BIOGRAFIAS</strong></h1>
+		<h4>Conoce mas acerca de aquellos que trabajan y legislan en tu municipio.</h4>
+	</div>
+	{% if getID is not empty %}
+		<div id="section" class="well well-lg">
+			<h2><strong>{{ fila['nombre'] }}</strong></h2>
+			<img src="/concejo/galeria/thumb_{{ fila['image'] }}" class="img-thumbnail center-block" />
+			<p>{{ fila['biografia']|nl2br }}</p>
+		</div>
+	{% else %}
+		{% for biografia in lista %}
+			<div id="section" class="well well-lg">
+				<h2><strong>{{ biografia['nombre'] }}</strong></h2>
+				<img src="/concejo/galeria/thumb_{{ biografia['image'] }}" class="img-thumbnail center-block" />
+				<p>{{ biografia['biografia']|cortartexto|nl2br }}
+				<a href="biografias_id/{{ biografia['id'] }}" > Seguir leyendo mas >></a></p>
+			</div>
+		{% endfor %}
+
+		<ul class="pager">
+		{% if pagSiguiente <= paginas %}
+			<li class="next">
+				<a href="biografias?pag={{ pagSiguiente }}"> Siguientes <small>>></small></a>
+			</li>
+		{% endif %}
+		{% if pagAnterior > 0 %}
+			<li class="previous">
+				<a href="biografias?pag={{ pagAnterior }}"><small><<</small> Anteriores</a>
+			</li>
+		{% endif %}
+		</ul>
+	{% endif %}
+{% endblock %}

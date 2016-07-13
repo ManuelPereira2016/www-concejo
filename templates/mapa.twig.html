@@ -1,0 +1,11 @@
+{% extends 'base.twig.html' %}
+
+{% block content %}
+	<div id="section" class="well well-sm">
+		<h1><strong>MAPA DEL MUNICIPIO ZAMORA</strong></h1>
+		<h4>Utiliza las herramientas geograficas disponibles aqui para conocer mejor tu municipio.</h4>	
+	</div>
+	<div id="map"></div>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBynqefFbvkr3-MxsnT602rSdtIoU3AJ_0&callback=initMap"></script>
+	<script type="text/javascript" src="/concejo/js/mapa.js" ></script>
+{% endblock %}

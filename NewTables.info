@@ -1,0 +1,21 @@
+-- Tabla encuestas.
+
+CREATE TABLE IF NOT EXISTS `encuesta` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `titulo` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `fecha` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`) )
+  ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=1;
+
+CREATE TABLE IF NOT EXISTS `encuestaOpciones` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idEncuesta` int(11) NOT NULL ,
+  `opcion` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `valor` int(11) NOT NULL,
+  FOREIGN KEY (`idEncuesta`) 
+  REFERENCES encuesta(id) ON UPDATE CASCADE ON DELETE CASCADE,
+  PRIMARY KEY (`id`) )
+  ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=1;
+
+insert into encuesta VALUES (null, 'sample', 'date');
+

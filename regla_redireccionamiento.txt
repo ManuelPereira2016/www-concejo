@@ -1,0 +1,24 @@
+Tener estas reglas presentes al instalar en un servidor web.
+
+son reglas para el mod rewrite un accesorio practicamente del apache2 que permite
+jugar con la url y hacer urls amigables.
+
+RewriteEngine on
+
+RewriteCond %{HTTP_HOST} ^www.concejodelmunicipiozamora.org.ve [NC]
+RewriteRule ^(.*)$ http://concejodelmunicipiozamora.org.ve/$1 [L,R=301]
+
+Redirigir www a http:// a secas con esas 2 lineas en el htaccess se logra eso tiene
+que ir en la raiz del servidor web /var/www/
+
+RewriteCond %{REQUEST_URI} !^/concejo
+RewriteRule ^(.*)$ /concejo/$1 [NC,L]
+
+Con estas 2 ultimas redirijo del nombre dominio o la ip a la subcarpeta dentro de
+la raiz con el sitio web en este caso es de / raiz a la carpeta concejo.
+
+Esta preparado asi y no en la raiz para asi poder permitir la existencia de
+varios sitios web en el mismo server.
+
+
+

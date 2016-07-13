@@ -1,0 +1,87 @@
+{% extends 'base.twig.html' %}
+
+{% block content %}
+	<div id="section" class="well well-lg">
+		<h1><strong>Editor de articulos</strong></h1>
+		{% if add != 0 %}
+			<div id='confirmation'> El articulo se agrego con exito.
+			{% if error is not empty %}
+				{{ error }}
+			{% endif %}
+			</div>
+		{% endif %}
+		{% if dele != 0 %}
+			<div id='confirmation'> El articulo se elimino con exito.
+			</div>
+		{% endif %}
+		{% if edit != 0 %}
+			<div id='confirmation'> El articulo ha sido editado con exito.
+			</div>
+		{% endif %}
+		<h3 class="glyphicon glyphicon-briefcase center-block"> Listado de articulos</h3>
+		<table class="table table-bordered table-condensed table-hover">
+			<tr>
+				<th style="width:600px;background-color:#cccccc;padding:5px;">Titulo</th>
+				<th style="background-color:#cccccc;padding:5px;width:10px"></th>
+				<th style="background-color:#cccccc;padding:5px;width:10px"></th>
+			</tr>
+		{% for datos in lista %}
+			<tr>
+				<td style="padding=5px;">{{ datos['titulo'] }}</td>
+				<td style="padding=5px;"><a href="articulos?id={{ datos['id'] }}">Editar</a></td>
+				<td style="padding=5px;"><span class="link" onclick="deleteID({{ datos['id'] }})">Borrar</span></td>
+			</tr>
+		{% endfor %}
+		</table>
+	</div>
+	{% if id is empty %}
+		<div id="formulario" >
+			<h4 class="well well-sm">Agregar un nuevo articulo</h4>
+			<form id="form" enctype="multipart/form-data" action="{{ SERVER|escape }}" method="post" >
+				<label for="foto">Agregar foto:</label>
+				<input type="file" id="foto" required/><br />
+				<progress id="progress_bar" value="0" max="100"></progress>
+				<h3 id="status"></h3>
+				<input type="hidden" id="add" name="add" value="0" />
+				<input type="hidden" id="dele" name="dele" value="0" />
+				<input type="hidden" id="upload" value="/concejo/admin/artUpload.php" />
+				<input type="hidden" id="error" name="error" value="" />
+				<label>Titulo:</label>
+				<input type="text" id="titulo" class="form-control" maxlength="90" required/><br />
+				<label>Fecha:</label>
+				<input type="text" id="dateField" class="form-control" required/><br />
+				<label>Breve descripcion:</label>
+				<input type="text" id="descripcion" class="form-control" maxlength="100" required/><br />
+				<label>Escribe tu articulo:</label>
+				<textarea rows="10" cols="51" id="articulo" class="form-control" required></textarea><br />
+				<input type="button" value="Agregar" class="btn btn-primary" onclick="uploadNews()"/>
+			</form>
+		</div>
+	{% endif %}
+	{% if id is not empty %}
+		<div id="formulario">
+			<h4 class="well well-sm">Editar un articulo</h4>
+			<form id="form" enctype="multipart/form-data" action="{{ SERVER|escape }}" method="post" >
+				<label for="foto">Agregar foto:</label>
+				<input type="file" id="foto" />
+				<p>El archivo {{ fila['image'] }} fue previamente subido.</p><br />
+				<input type="hidden" id="previous" value="{{ fila['image'] }}" />
+				<progress id="progress_bar" value="0" max="100"></progress>
+				<h3 id="status"></h3>
+				<input type="hidden" id="edit" name="edit" value="0" />
+				<input type="hidden" id="dele" name="dele" value="0" />
+				<input type="hidden" id="upload" value="/concejo/admin/artUpload.php" />
+				<label>Titulo:</label>
+				<input type="text" id="titulo" class="form-control" maxlength="90" required value="{{ fila['titulo'] }}" /><br />
+				<label>Fecha:</label>
+				<input type="text" id="dateField" class="form-control" required value="{{ fila['fecha'] }}" /><br />
+				<label>Breve descripcion:</label>
+				<input type="text" id="descripcion" class="form-control" maxlength="100" required value="{{ fila['resumen'] }}" /><br />
+				<label>Escribe tu articulo:</label>
+				<textarea rows="10" cols="51" class="form-control" id="articulo">{{ fila['articulo'] }}</textarea><br />
+				<input type="hidden" name="id_art" id="id_edit" value="{{ fila['id'] }}"/>
+				<input type="button" value="Editar" class="btn btn-primary" onclick="uploadNews()"/>
+			</form>
+		</div>
+	{% endif %}
+{% endblock %}

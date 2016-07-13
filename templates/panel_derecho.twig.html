@@ -1,0 +1,98 @@
+<div id="body_der" class="col-xs-8 col-sm-3 col-md-3 col-lg-3">
+	<aside class="well well-sm ">
+		<a href="https://www.facebook.com/Concejo-Municipal-de-Zamora-1156269774393553/?fref=ts" style="text-decoration:none;" >	
+		<img src="/concejo/imagenes/rect_facebook.png" width="23%" />
+		</a>
+		<a href="https://twitter.com/legiszamora" style="text-decoration:none;" >
+		<img src="/concejo/imagenes/rect_twitter.png" width="23%"  />
+		</a>
+		<a href="https://www.youtube.com/channel/UCe8eVKb-v3uam0XhHVeZE9A" style="text-decoration:none;" >	
+		<img src="/concejo/imagenes/rect_youtube.png" width="23%"  />
+		</a>
+		<a href="RSS" style="text-decoration:none;" >	
+		<img src="/concejo/imagenes/rect_rss.png" width="23%"  />
+		</a>
+	</aside>
+	{% if titulo is not empty or titulo is not null %}
+		<img src="/concejo/imagenes/encuesta.png" class="img-responsive well well-sm " />
+		<aside id="encuesta" class="well well-lg">
+		<p style="text-align: justify;font-size: 12px;font-weight: bold;">
+		{{ titulo }}<br /><small>{{ fecha|capitalize }}</small></p>
+		<input type="button" class="btn btn-primary" value="Votar"
+		onclick="window.open('/concejo/votacion.php?opc=v','','width=200,height=390')"/>
+		<input type="button" class="btn btn-primary" value="Resultados"
+		onclick="window.open('/concejo/votacion.php?opc=r','','width=200,height=390')"/>
+		</aside>
+	{% endif %}
+	{% if (currentPage == '/' or currentPage == '/concejo/' or currentPage == '/concejo/index.php' ) %}
+	<img src="/concejo/imagenes/visitas.png" class="img-responsive well well-sm " />
+	<p style="text-align:center;font-size:40px;" class="bg-primary">
+		{{ visitas }}
+	</p>
+	{% endif %}
+	<aside class="well well-sm">
+	<a href="/concejo/comisiones" >
+		<img src="/concejo/imagenes/comisiones.png" class="img-responsive " />
+	</a>
+	</aside>
+	<aside class="well well-sm">
+	<a href="/concejo/himno">	
+		<img src="/concejo/imagenes/himnos.png" class="img-responsive" />
+	</a>
+	</aside>
+	<aside class="well well-sm">
+	<a href="/concejo/historia">	
+		<img src="/concejo/imagenes/historia.png" class="img-responsive" />
+	</a>
+	</aside>
+	<aside class="well well-sm">
+	<a href="/concejo/calendario" >		
+		<img src="/concejo/imagenes/calendario.png" class="img-responsive" />
+	</a>
+	</aside>
+	<p class="well well-sm">Aqui podra ver el dia y hora fijados para cada sesion del concejo.</p>
+	<aside class="well well-sm">
+	<a href="/concejo/vision">		
+		<img src="/concejo/imagenes/slogan.png" class="img-responsive" />
+	</a>
+	</aside>
+	<aside class="well well-sm">
+	<a href="/concejo/docs/Programa-Patria-2013-2019.pdf">
+		<img src="/concejo/imagenes/plan_de_la_patria.gif" class="img-responsive" />
+	</a>
+	</aside>
+	<div id="recomendados" class="well well-lg">
+		<h4 class="well well-sm well-custom"><small>SITIOS RECOMENDADOS</small></h4>
+		<p class="resaltado_verde">Mantente al dia en el tema politico.</p>
+		<a href="http://www.cne.gob.ve">CONCEJO NACIONAL ELECTORAL</a><br/>
+		<a href="http://www.tsj.gob.ve">TRIBUNAL SUPREMO DE JUSTICIA</a><br/>
+		<a href="http://www.asambleanacional.gob.ve">ASAMBLEA NACIONAL</a>
+	</div>
+	<div class="form-group well well-lg">
+		<h4 class="well well-sm"><small>CONTACTANOS</small></h4>
+		<form id="form1" name="form1" method="POST" action="index.php">
+		<input type="text" name="nombre" id="textfield" class="form-control" placeholder="Tu nombre"/>
+		<input type="text" name="correo" id="textfield" class="form-control" placeholder="Tu direccion de correo"/>
+		<input type="hidden" name="contacto" id="contacto" value="1" />
+		<textarea rows="4" name="mensaje" id="textfield" class="form-control" placeholder="Aqui escribe tu mensaje"></textarea>
+		<br />
+		<input type="submit" name="button" id="button" class="btn btn-default" value="Enviar"/>
+		</form>
+	</div>
+	<div class="well well-lg"><p class="lead">Siguenos en Twitter!</p>
+		<a class="twitter-timeline"  href="https://twitter.com/legiszamora" height="400" data-widget-id="698693329802891266">Tweets de @legiszamora.</a>
+		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</div>
+<!-- Verificamos si ya inicio sesion y si la url se ingreso desde el equipo servidor localhost -->
+	{% if url matches '/localhost/i' %}
+		{% if usuario is empty or usuario is null %}
+			<h5 class="well well-sm"><a href="login">Iniciar sesion</a></h5>
+		{% else %}
+			<h3>Bienvenido</h3>
+			<span class="link" onclick="logout()">Cerrar sesion</span><br/>
+			<h5><a href="/concejo/admin/index.php">Panel de administracion</a></h5>
+		{% endif %}
+	{% endif %}
+</div></div>
+<div id="pre_footer"></div>
+</div></div>

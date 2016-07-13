@@ -1,0 +1,90 @@
+{% extends 'base.twig.html' %}
+
+{% block content %}
+	<div id="front" class="well well-lg">
+		<div id="carousel" class="carousel slide carousel-fade" data-ride="carousel">
+		<!-- Carousel items -->
+		    <div class="carousel-inner">
+		        <div class="active item">
+		        	<img  src="imagenes/main.png" class="img-responsive" />
+		        </div>
+		        <div class="item">
+		        	<img  src="imagenes/main2.png" class="img-responsive" />
+		        </div>
+		        <div class="item">
+		        	<img  src="imagenes/main3.png" class="img-responsive" />
+		        </div>
+		    </div>
+		</div>
+	</div>
+
+	<div id="main" >
+	<!--Comienzo del código para pase de imágenes (Carrusel)-->
+		<div id="miCarrusel" class="carousel slide carousel-fade">
+		<!-- indicadores de elementos -->
+		<ol class="carousel-indicators">
+			<li data-target="#miCarrusel" data-slide-to="0" class="active"></li>
+			<li data-target="#miCarrusel" data-slide-to="1"></li>
+			<li data-target="#miCarrusel" data-slide-to="2"></li>
+			<li data-target="#miCarrusel" data-slide-to="3"></li>
+			<li data-target="#miCarrusel" data-slide-to="4"></li>
+			<li data-target="#miCarrusel" data-slide-to="5"></li>
+			<li data-target="#miCarrusel" data-slide-to="6"></li>
+		</ol>
+
+		<div class="carousel-inner"><!-- Carrusel elementos (items) -->
+			<div class="item active">
+				<img src="imagenes/banner-web-consumo-Eficiente.jpg" />
+			</div>
+			<div class="item">
+				<img src="imagenes/titulo.jpg"  />
+	       	</div>
+			<div class="item">
+				<img src="imagenes/concejo.png" />
+	       	</div>
+			<div class="item">
+				<img src="imagenes/gobernador.png"  />
+	       	</div>
+			<div class="item">
+				<img src="imagenes/moises1.png"  />
+	       	</div>
+			<div class="item">
+				<img src="imagenes/moises2.png"  />
+	       	</div>
+			<div class="item">
+				<img src="imagenes/moises3.png"  />
+	       	</div>
+			<div class="item">
+				<img src="imagenes/moises4.png" class="center-block" />
+	       	</div>
+	    </div><!-- cierre carousel-inner-->
+		</div><!-- cierre miCarrusel-->
+	<!--Final del código para pase de imágenes (Carrusel)-->
+	</div>
+
+	<div class="well well-lg">
+	<video id="video" autoplay src="/concejo/video/animacion.mp4" ></video>
+	</div>
+
+	{% for articulo in lista %}
+		<div id="section" class="well well-lg">
+			<h2><strong>{{ articulo['titulo']|upper }}</strong></h2>
+			<h4>{{articulo['fecha']|upper }} - {{ articulo['resumen'] }}</h4>
+			<img class="img-thumbnail" alt="concejo_small" src="/concejo/galeria/thumb_{{ articulo['image'] }}" />
+			<p>{{ articulo['articulo']|cortartexto|nl2br }} <a href="/concejo/mostrar/{{ articulo['id'] }}" >Seguir leyendo mas >></a></p>
+		</div>
+	{% endfor %}
+
+	<ul class="pager">
+	{% if pagSiguiente <= paginas %}
+		<li class="next">
+			<a href="pag={{ pagSiguiente }}"> Siguientes <small>>></small></a>
+		</li>
+	{% endif %}
+	{% if pagAnterior > 0 %}
+		<li class="previous">
+			<a href="pag={{ pagAnterior }}"><small><<</small> Anteriores</a>
+		</li>
+	{% endif %}
+	</ul>
+{% endblock %}

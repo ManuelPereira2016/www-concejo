@@ -1,0 +1,90 @@
+{% extends 'base.twig.html' %}
+
+{% block content %}
+	<div id="section" class="well well-lg">
+		<h1><strong>Biblioteca.</strong></h1>
+		{% if add != 0 %}
+			<div id='confirmation'> El documento se agrego con exito.</div>
+		{% endif %} 
+		{% if dele != 0 %}
+			<div id='confirmation'> El documento se elimino con exito.</div>
+		{% endif %}
+		{% if edit != 0 %}
+			<div id='confirmation'> El documento ha sido actualizado con exito.</div>
+		{% endif %}
+		<h3 class="glyphicon glyphicon-briefcase center-block"> Documentos</h3>
+		<table class="table table-bordered table-condensed table-hover">
+			<tr>
+				<th style="width:220px;background-color:#cccccc;">Nombre.</th>
+				<th style="width:220px;background-color:#cccccc;">Categoria.</th>
+				<th style="background-color:#cccccc;padding:5px;width:30px"></th>
+				<th style="background-color:#cccccc;padding:5px;width:30px"></th>
+			</tr>
+			{% for datos in lista %}
+				<tr>
+					<td style="padding=5px;">{{ datos['nombre'] }}</td>
+					<td style="padding=5px;">{{ datos['categoria'] }}</td>
+					<td style="padding=5px;"><a href="docs?id={{ datos['id'] }}">Editar</a></td>
+					<td style="padding=5px;"><span class="link" onclick="deleteID({{ datos['id'] }})">Borrar</span></td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+	{% if id is empty %}
+		<div id="formulario">
+		<h4 class="well well-sm">Agregar un nuevo documento</h4>
+			{% if error is not empty %}
+				<h3>{{ error }}</h3>
+			{% endif %}
+			<form id="form" action="{{ SERVER|escape }}" enctype="multipart/form-data" method="post">
+				<label>Agregar documento:</label>
+				<input type="file" name="doc" id="doc"/><br />
+				<progress id="progress_bar" value="0" max="100"></progress>
+				<h3 id="status"></h3>
+				<input type="hidden" id="add" name="add" value="0" />
+				<input type="hidden" id="dele" name="dele" value="0" />
+				<input type="hidden" id="upload" value="/concejo/admin/upload.php" />
+				<label>Nombre:</label>
+				<input type="text" name="nombre" class="form-control" id="nombre" /><br />
+				<label>Descripcion:</label>
+				<input type="text" name="descripcion" class="form-control" id="descripcion" /><br />
+				<input type="radio" id="Ordenanza" name="type" value="Ordenanza" > Ordenanza
+				<input type="radio" id="Acuerdo" name="type" value="Acuerdo" > Acuerdo
+				<input type="radio" id="Decreto" name="type" value="Decreto" > Decreto<br /><br />
+				<input type="button" value="Agregar" class="btn btn-primary" onclick="uploadFile()"/>
+			</form>
+		</div>
+	{% endif %}
+	
+	{% if id is not empty %}
+		<div id="formulario" >
+			<h4 class="well well-sm">Editar o actualizar un documento</h4>
+			{% if error is not empty %}
+				<h3>{{ error }}</h3>
+			{% endif %}
+			<form id="form" action="{{ SERVER|escape }}" enctype="multipart/form-data" method="post">		
+				<label>Agregar documento:</label>
+				<input type="file" name="doc" id="doc" /><br />
+				<p>El archivo {{ fila['documento'] }} fue previamente subido.</p><br />
+				<input type="hidden" name="previous_doc" id="previous_doc" value="{{ fila['documento'] }}" />
+				<progress id="progress_bar" value="0" max="100"></progress>
+				<h3 id="status"></h3>
+				<input type="hidden" id="edit" name="edit" value="0" />
+				<input type="hidden" id="dele" name="dele" value="0" />
+				<input type="hidden" id="upload" value="/concejo/admin/upload.php" />
+				<label>Nombre:</label>
+				<input type="text" name="nombre" class="form-control" id="nombre" value="{{ fila['nombre'] }}"/><br />
+				<label>Descripcion:</label>
+				<input type="text" name="descripcion" class="form-control" id="descripcion" value="{{ fila['descripcion'] }}" /><br />
+				<input type="radio" name="type" id="Ordenanza" value="Ordenanza"
+				{% if fila['categoria'] == 'Ordenanza' %} {{ "checked" }} {% endif %}> Ordenanza
+				<input type="radio" name="type" id="Acuerdo" value="Acuerdo"
+				{% if fila['categoria'] == 'Acuerdo' %} {{ "checked" }} {% endif %}> Acuerdo
+				<input type="radio" name="type" id="Decreto" value="Decreto"
+				{% if fila['categoria'] == 'Decreto' %} {{ "checked" }} {% endif %}> Decreto<br /><br />
+				<input type="hidden" name="id_edit" id="id_edit" value="{{ fila['id'] }}"/>
+				<input type="button" value="Editar" class="btn btn-primary" onclick="uploadFile()"/>
+			</form>
+		</div>
+	{% endif %}
+{% endblock %}

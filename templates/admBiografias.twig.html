@@ -1,0 +1,78 @@
+{% extends 'base.twig.html' %}
+
+{% block content %}
+	<div id="section" class="well well-lg">
+		<h1><strong>Editor de biografias</strong></h1>
+		{% if add != 0 %}
+			<div id='confirmation'> La biografia se agrego con exito.</div>
+		{% endif %}
+		{% if dele != 0 %}
+			<div id='confirmation'> La biografia se elimino con exito.</div>
+		{% endif %}
+		{% if edit != 0 %}
+			<div id='confirmation'> La biografia ha sido editada con exito.</div>
+		{% endif %}
+		<h3 class="glyphicon glyphicon-briefcase center-block"> Listado de biografias</h3>
+		<table class="table table-bordered table-condensed table-hover">
+			<tr>
+				<th style="width:600px;background-color:#cccccc;padding:5px;">Nombre</th>
+				<th style="background-color:#cccccc;padding:5px;width:30px"></th>
+				<th style="background-color:#cccccc;padding:5px;width:30px"></th>
+			</tr>
+			{% for datos in lista %}
+				<tr>
+					<td style="padding=5px;">{{ datos['nombre'] }}</td>
+					<td style="padding=5px;"><a href="biografias?id={{ datos['id'] }}">Editar</a></td>
+					<td style="padding=5px;"><span class="link" onclick="deleteID({{ datos['id'] }})">Borrar</span></td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+	{% if id is empty %}
+		<div id="formulario">
+			<h4 class="well well-sm">Agregar una nueva biografia</h4>
+			{% if error is not empty %}
+				<h3><?php echo $error;?></h3>
+			{% endif %}
+			<form id="form" enctype="multipart/form-data" action="{{ SERVER|escape }}" method="post" >
+				<label>Agregar foto:</label>
+				<input type="file" id="foto" /><br />
+				<progress id="progress_bar" value="0" max="100"></progress>
+				<h3 id="status"></h3>
+				<input type="hidden" id="add" name="add" value="0" />
+				<input type="hidden" id="dele" name="dele" value="0" />
+				<input type="hidden" id="upload" value="/concejo/admin/bioUpload.php" />
+				<label>Nombre:</label>
+				<input type="text" id="nombre" class="form-control" required/><br />
+				<label>Escribe tu biografia:</label>
+				<textarea rows="10" cols="51" id="biografia" class="form-control" required></textarea><br />
+				<input type="button" value="Agregar" class="btn btn-primary" onclick="uploadBio()"/>
+			</form>
+		</div>
+	{% endif %}
+	{% if id is not empty %}
+		<div id="formulario">
+			<h4 class="well well-sm">Editar una biografia</h4>
+			{% if error is not empty %}
+				<h3>{{ error }}</h3>
+			{% endif %}
+			<form id="form" enctype="multipart/form-data" action="{{ SERVER|escape }}" method="post" >
+				<label>Agregar foto:</label>
+				<input type="file" id="foto" /><br />
+				<img class="preview" src="../galeria/{{ fila['image'] }}" /><br />
+				<input type="hidden" id="previous" value="{{ fila['image'] }}" />
+				<progress id="progress_bar" value="0" max="100"></progress>
+				<h3 id="status"></h3>
+				<input type="hidden" id="edit" name="edit" value="0" />
+				<input type="hidden" id="dele" name="dele" value="0" />
+				<input type="hidden" id="upload" value="/concejo/admin/bioUpload.php" />
+				<label>Nombre:</label>
+				<input type="text" id="nombre" class="form-control" required value="{{ fila['nombre'] }}" /><br />
+				<label>Escribe tu biografia:</label>
+				<textarea rows="10" cols="51" id="biografia" class="form-control" required>{{ fila['biografia'] }}</textarea><br />
+				<input type="hidden" id="id_edit" value="{{ fila['id'] }}"/>
+				<input type="button" id="submitEdit" value="Editar" class="btn btn-primary" onclick="uploadBio()"/>
+			</form>
+		</div>
+	{% endif %}
+{% endblock %}

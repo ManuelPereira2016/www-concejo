@@ -1,0 +1,43 @@
+{% extends 'base.twig.html' %}
+
+{% block content %}
+	<div id="section" class="well well-sm">
+		<h1><strong>CALENDARIO DE SESIONES</strong></h1>
+		<h4>Sesiones listas para realizarse durante este mes.</h4>
+	</div>
+	<div id="section" class="well well-lg">
+		<label>Mes:</label>
+		<select name="month" id="months" onchange="calendario()">
+		<option value="Enero">Enero</option>
+		<option value="Febrero">Febrero</option>
+		<option value="Marzo">Marzo</option>
+		<option value="Abril">Abril</option>
+		<option value="Mayo">Mayo</option>
+		<option value="Junio">Junio</option>
+		<option value="Julio">Julio</option>
+		<option value="Agosto">Agosto</option>
+		<option value="Septiembre">Septiembre</option>
+		<option value="Octubre">Octubre</option>
+		<option value="Noviembre">Noviembre</option>
+		<option value="Diciembre">Diciembre</option>
+		</select>
+		<p>Por favor seleccione el mes para explorar todas las sesiones del año.</p>
+		<div id="calendarioTable">
+			<table class="table table-bordered table-condensed table-hover">
+				<tr>
+					<th style="background-color:#cccccc;padding:5px;">
+					{{ mes|upper }}
+					</th>
+				</tr>
+				{% for datos in lista %}
+				<tr>
+					<td>
+						<span>{{ datos['dia'] }} de {{ datos['mes'] }} del {{ datos['año'] }}. {{ datos['sesion'] }}
+						</span>
+					</td>
+				</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+{% endblock %}

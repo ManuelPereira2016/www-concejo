@@ -1,0 +1,53 @@
+{% extends 'base.twig.html' %}
+
+{% block content %}
+	<div id="section" class="well well-lg">
+		<h2>Gestion de la encuesta.</h2>
+		{% if edit != 0 %}
+			<div id='confirmation'> La encuesta se modifico con exito.</div>
+		{% endif %}
+		{% if dele != 0 %}
+			<div id='confirmation'> La opcion se elimino con exito.</div>
+		{% endif %}
+		{% if add != 0 %}
+			<div id='confirmation'> La opcion se agrego con exito.</div>
+		{% endif %}
+		<h3 class="glyphicon glyphicon-briefcase center-block"> Encuesta:</h3>
+		<h4 class="well well-sm">{{ fila['titulo'] }} <small>{{ fila['fecha']|capitalize }}</small></h4>
+		<table class="table table-bordered table-condensed table-hover">
+			<tr>
+				<th style="background-color:#cccccc;padding:5px;">Opciones disponibles</th>
+				<th style="background-color:#cccccc;padding:5px;width:10px"></th>
+			</tr>
+		{% for datos in lista %}
+			<tr>
+				<td style="padding=5px;">{{ datos['opcion'] }}</td>
+				<td style="padding=5px;"><span class="link" onclick="deleteID({{ datos['id'] }})">Borrar</span></td>
+			</tr>
+		{% endfor %}
+		</table>
+	</div>
+		<div id="formulario">
+			<h4 class="well well-sm">Edita el titulo de la encuesta.</h4>
+			{% if error is not empty %}
+				<h3>{{ error }}</h3>
+			{% endif %}
+			<form id="form" enctype="multipart/form-data" 
+			action="{{ SERVER|escape }}" method="post" >
+				<input type="hidden" id="edit" name="edit" value="0" />
+				<input type="hidden" id="add" name="add" value="0" />
+				<input type="hidden" id="dele" name="dele" value="0" />
+				<label>Titulo de la encuesta:</label>
+				<input type="text" id="encuesta" class="form-control" maxlength="255" required value="{{ fila['titulo'] }}"/><br />
+				<input type="button" value="Editar" class="btn btn-primary" onclick="uploadVote(2)"/>
+			</form>
+			<h4 class="well well-sm">Añade nuevas opciones a la encuesta.</h4>
+			<form id="form" enctype="multipart/form-data" 
+			action="{{ SERVER|escape }}" method="post" >
+				<input type="hidden" id="upload" value="/concejo/admin/voteUpload.php" />
+				<label>Opcion a tomar en cuenta:</label>
+				<input type="text" id="opcion" class="form-control" maxlength="255" required/><br />
+				<input type="button" value="Agregar" class="btn btn-primary" onclick="uploadVote(1)"/>
+			</form>
+		</div>
+{% endblock %}
